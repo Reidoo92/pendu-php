@@ -24,7 +24,8 @@ const DICO = [
  * @return string Un mot du dictionnaire
  */
 function getRandomWord():string{
-    return '';
+    $randomWord = array_rand(DICO);
+    return DICO[$randomWord];
 }
 
 /**
@@ -34,7 +35,9 @@ function getRandomWord():string{
  * @return integer L'index du mot dans le DICO
  */
 function getIndexOfWord(string $word):int|false{
-    return false;
+
+    $index = array_rand($word);
+    return $index;
 }
 
 /**
@@ -46,7 +49,22 @@ function getIndexOfWord(string $word):int|false{
  * @return integer Le nombre de lettres erronées
  */
 function countErrors(string $propositions, string $word): int{
-    return 0;
+
+    $accents  = array('À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ð', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ');
+	$notAccents = array('A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'O', 'O', 'O', 'O', 'O', 'U', 'U', 'U', 'U', 'Y', 'a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'y', 'y');
+	$word = str_replace($accents, $notAccents, $word);
+	$propositions = str_replace($accents, $notAccents, $propositions);
+    $proSize = strlen($propositions);
+
+    $error = 0;
+
+    for ($i=0; $i < $proSize; $i++) { 
+        if (!str_contains($word, $propositions[$i])) {
+            $error++;
+        }
+    };
+
+    return $error;
 }
 
 /**
@@ -61,7 +79,26 @@ function countErrors(string $propositions, string $word): int{
  * @param string $word Le mot à trouver
  * @return string La chaîne d'indices finale
  */
-function getClueString(string $propositions, string $word): string{
-    return '';
+function getClueString( string $propositions, string $word): string{
+
+    $accents  = array('À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ð', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ');
+	$notAccents = array('A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'O', 'O', 'O', 'O', 'O', 'U', 'U', 'U', 'U', 'Y', 'a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'y', 'y');
+	$word = str_replace($accents, $notAccents, $word);
+	$propositions = str_replace($accents, $notAccents, $propositions);
+
+    $proSize = strlen($word);
+    $searchWord = '';
+
+    for ($i=0; $i < $proSize ; $i++) { 
+
+        $searchWord = $searchWord.' '.'_'.' ';
+
+        if (str_contains($word, $propositions[$i])) {
+            $searchWord = str_replace($searchWord, $notAccents, $propositions);
+        }
+
+    }
+
+    return $searchWord;
 }
 

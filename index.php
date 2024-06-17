@@ -1,6 +1,6 @@
 <?php
 require_once './lib/hangman.php';
-
+require_once './lib/debug.php';
 // VARIABLES NÉCESSAIRES
 $lettre         = '';       // LA LETTRE QUI VIENT D'ÊTRE SAISIE PAR L'UTILISATEUR (SI PAS LE PREMIER ROUND)
 $propositions   = '';       // CHAÎNE DE CARACTÈRES REGROUPANT L'ENSEMBLE DE TOUTES LES PROPOSITIONS FAITES PAR LE JOUEUR JUSQU'ICI
@@ -11,6 +11,16 @@ $nbErrors       = 0;        // NOMBRE D'ERREURS FAITES JUSQU'ICI PAR LE JOUEUR (
 $lost           = false;    // TRUE SI LE JOUEUR A PERDU
 $won            = false;    // TRUE SI LE JOUEUR A GAGNÉ
 $clueCSSClass   = '';       // CLASSE CSS À AJOUTER À LA CLUESTRING ON FONCTION DE LA LONGUEUR DU MOT (POUR QUE CELA RENTRE DANS L'ÉCRAN)
+
+
+$word = getRandomWord();
+debug($word);
+
+$error = countErrors('azrsopf', 'partie');
+debug($error);
+
+/* $wordTest = getClueString('ivfcuyzevfuyhzvehvcdhzevcyu');
+debug($wordTest); */
 
 // SI LA LETTRE EXISTE DANS $_POST (envie du formulaire)
 
